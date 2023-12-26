@@ -144,11 +144,11 @@ function main () {
                 console.log(data);
                 let database64 = Buffer.from(data, 'utf-8').toString('base64') + '\n';
                 res.writeHead(200, {
-                    "Content-Encoding": "gzip",
+                    // "Content-Encoding": "gzip",
                     "Content-Type": "text/html; charset=UTF-8",
-                    "Vary": "Accept-Encoding",
+                    // "Vary": "Accept-Encoding",
                     // "Proxy-Connection": "keep-alive",
-                    "Content-Length": database64.length
+                    // "Content-Length": database64.length
                 });
                 res.write(database64, (err) => {
                     res.end();
