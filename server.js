@@ -5,8 +5,8 @@ const crypto = require('crypto');
 const { gzip } = require('zlib');
 
 const server = http.createServer();
-
-const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.123pan.com/s/l6x0Vv-htTu3.html|小白龙白龙马"},"nonce":"cm4j6r0o3pj84ant4a00","sign":"295b1ffe6101999d9ba9e03bea56b987"};
+const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.123pan.com/s/l6x0Vv-eLTu3.html|小白龙白龙马"},"nonce":"cm587j0o3pj84ai68ro0","sign":"88ecd3a5c7ea32ad59a1387880b54132"}
+// const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.123pan.com/s/l6x0Vv-htTu3.html|小白龙白龙马"},"nonce":"cm4j6r0o3pj84ant4a00","sign":"295b1ffe6101999d9ba9e03bea56b987"};
 const ret_base64_1 = 'LI4CcopnLhVi4x2yUZZVB/tjuH9XDKnLK3uk7dv6Z4lB3kZdz1gC0IJQls1XYpwnw2q6IT3cLVsULGXdc6gx1BbHgHoEcNE0qnM16ftPre+HKvXF1yi7cPjRfX2Y+Tkb4vWnca8+h5DHzrToGODnz/zqZ+0lpOm7CFnKKoYWwU8='
 const ret_base64_2 = 'eyJjb2RlIjo0MDQsIm1lc3NhZ2UiOiLljaHlr4bkuI3lrZjlnKjvvIzor7fmo4Dmn6XovpPlhaXnmoTljaHlr4YiLCJub25jZSI6ImNtNG45cTBvM3BqODRhamhvZTUwIiwic2lnbiI6IjUwOWYzNTgzZDcyNzQxNGViOTQ3OGJhYzhmMzE1OTE3In0'
 const app_secret = "YXDmQTvWK0gPmKwGN0CqY9mHC7YITDU0"
@@ -176,7 +176,8 @@ function main () {
             let ip = req.connection.remoteAddress + '';
             ip = ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g)[0];
             res.end(ip+'连接成功', 'utf-8');
-        } else {   
+        } else {
+            console.log(req.headers);
             res.end('404 not found.');
         }
     });
