@@ -169,7 +169,14 @@ function main () {
                 "Content-Type": "text/plain; charset=utf-8",
             });
             res.end('Pong', 'utf-8');
-        } else {    
+        } else if (url == '/') {
+            res.writeHead(200, {
+                "Content-Type": "text/plain; charset=utf-8",
+            });
+            let ip = req.connection.remoteAddress + '';
+            ip = ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g)[0];
+            res.end(ip+'连接成功', 'utf-8');
+        } else {   
             res.end('404 not found.');
         }
     });
