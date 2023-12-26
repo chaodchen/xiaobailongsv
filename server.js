@@ -9,6 +9,7 @@ const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.1
 // const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.123pan.com/s/l6x0Vv-htTu3.html|小白龙白龙马"},"nonce":"cm4j6r0o3pj84ant4a00","sign":"295b1ffe6101999d9ba9e03bea56b987"};
 const ret_base64_1 = 'LI4CcopnLhVi4x2yUZZVB/tjuH9XDKnLK3uk7dv6Z4lB3kZdz1gC0IJQls1XYpwnw2q6IT3cLVsULGXdc6gx1BbHgHoEcNE0qnM16ftPre+HKvXF1yi7cPjRfX2Y+Tkb4vWnca8+h5DHzrToGODnz/zqZ+0lpOm7CFnKKoYWwU8='
 const ret_base64_2 = 'eyJjb2RlIjo0MDQsIm1lc3NhZ2UiOiLljaHlr4bkuI3lrZjlnKjvvIzor7fmo4Dmn6XovpPlhaXnmoTljaHlr4YiLCJub25jZSI6ImNtNG45cTBvM3BqODRhamhvZTUwIiwic2lnbiI6IjUwOWYzNTgzZDcyNzQxNGViOTQ3OGJhYzhmMzE1OTE3In0'
+const ret_base64_3 = 'eyJjb2RlIjo0MDAsIm1lc3NhZ2UiOiLlj4LmlbDplJnor68iLCJlcnJzIjp7IkNhcmRMb2dpblBhcmFtcy5Db21tb25TaWduUGFyYW1zLk5vbmNlIjoiTm9uY2Xplb/luqbkuI3og73otoXov4czNuS4quWtl+espiIsIkNhcmRMb2dpblBhcmFtcy5EZXZpY2VJRCI6IkRldmljZUlE5Li65b+F5aGr5a2X5q61In0sIm5vbmNlIjoiIiwic2lnbiI6IiJ9'
 const app_secret = "YXDmQTvWK0gPmKwGN0CqY9mHC7YITDU0"
 const app_key = "cm239ujdqusutr291pt0"
 const host = "api.paojiaoyun.com"
@@ -81,7 +82,7 @@ function main () {
     server.on('request', function(req, res) {
         let url = req.url;
         console.log("url=" + url);
-        console.log(req.headers);
+        // console.log(req.headers);
         if (url == '/xbl/xblxbl1.8') {
             res.writeHead(200, {
                 "Connection": "Upgrade, close",
@@ -165,6 +166,13 @@ function main () {
                 res.end(database64, 'utf-8');
                 
             });
+        } else if (url.match(/\/aa\.php\?card=\w+$/g)) {
+            res.writeHead(200, {
+                "Content-Type": "text/html; charset=UTF-8",
+            });
+            res.write(ret_base64_3, 'utf8', (err) => {
+                res.end();
+            });
         } else if (url.match(/\/v1\/ping/)) {
             res.writeHead(200, {
                 "Content-Type": "text/plain; charset=utf-8",
@@ -178,6 +186,7 @@ function main () {
             ip = ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g)[0];
             res.end(ip+'连接成功', 'utf-8');
         } else {
+            console.log('非法访问: ' + url);
             res.end('404 not found.');
         }
     });
