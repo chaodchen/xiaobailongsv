@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs')
 const path = require('path');
+const crypto = require('crypto');
 const { gzip } = require('zlib');
 
 const server = http.createServer();
@@ -8,6 +9,73 @@ const server = http.createServer();
 const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.123pan.com/s/l6x0Vv-htTu3.html|小白龙白龙马"},"nonce":"cm4j6r0o3pj84ant4a00","sign":"295b1ffe6101999d9ba9e03bea56b987"};
 const ret_base64_1 = 'LI4CcopnLhVi4x2yUZZVB/tjuH9XDKnLK3uk7dv6Z4lB3kZdz1gC0IJQls1XYpwnw2q6IT3cLVsULGXdc6gx1BbHgHoEcNE0qnM16ftPre+HKvXF1yi7cPjRfX2Y+Tkb4vWnca8+h5DHzrToGODnz/zqZ+0lpOm7CFnKKoYWwU8='
 const ret_base64_2 = 'eyJjb2RlIjo0MDQsIm1lc3NhZ2UiOiLljaHlr4bkuI3lrZjlnKjvvIzor7fmo4Dmn6XovpPlhaXnmoTljaHlr4YiLCJub25jZSI6ImNtNG45cTBvM3BqODRhamhvZTUwIiwic2lnbiI6IjUwOWYzNTgzZDcyNzQxNGViOTQ3OGJhYzhmMzE1OTE3In0'
+const app_secret = "QLDNPBQr2oWxdButviwELqR1qass4ueN"
+const app_key = "cm4r7kbdqusoknkpsa4g"
+const host = "api.paojiaoyun.com"
+
+function getTimestamp(){
+    let outcome = Math.round(new Date().getTime()/1000)
+    return outcome
+}
+
+function randomString(length) {
+    let result = '';
+    let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for (let i = length; i > 0; --i) {
+        result += chars[Math.floor(Math.random() * chars.length)]
+    }
+    return result;
+}
+  
+function http_json_post(api, data, callback) {
+    data = JSON.stringify(data)
+    let options = {
+        // protocol: 'http',
+        port: 80,
+        hostname: api.split('/')[2],
+        path: api.split(api.split('/')[2])[1],
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': data.length
+        }
+    }
+
+    const req = http.request(options, res => {
+        let chuck = ''
+        res.on('data', check => {
+            chuck += check
+        })
+        res.on('end', () => {
+            if (callback) {
+                callback(chuck)
+            }
+        })
+    }).on('error', err => {
+        console.log("Error", err.message)
+    })
+    req.write(data)
+    req.end()
+}
+
+function login(card, device_id, callback) {
+    let urlpath = "/v1/card/login";
+    let nonce = randomString(32);
+    let timestamp = getTimestamp();
+
+    let params = "app_key="+app_key+"&card="+card+"&device_id="+device_id+"&nonce="+nonce+"&timestamp="+timestamp;
+    let sign = crypto.createHash('md5').update('POST' + host + urlpath + params + app_secret).digest('hex');
+    let data = {
+        app_key: app_key,
+        card: card,
+        device_id: device_id,
+        nonce: nonce,
+        timestamp: timestamp,
+        sign: sign
+    }
+    http_json_post('http://api.paojiaoyun.com/v1/card/login', data, callback);
+}
+
 
 function main () {
     server.on('request', function(req, res) {
@@ -50,10 +118,10 @@ function main () {
             });
         } else if (url.match(/\/yy.php\?card=\w{32}/g)) {
             res.writeHead(200, {
-                "Connection": "keep-alive",
-                "Content-Encoding": "gzip",
+                // "Connection": "keep-alive",
+                // "Content-Encoding": "gzip",
                 "Content-Type": "text/html; charset=UTF-8",
-                "Vary": "Accept-Encoding"
+                // "Vary": "Accept-Encoding"
             });
             res.write(ret_base64_1, 'utf8', (err) => {
                 res.end();
@@ -65,15 +133,24 @@ function main () {
             res.write(JSON.stringify(ret_json_1), (err) => {
                 res.end();
             });
-        } else if (url.match(/\/aa\.php\?card=yttt&device_id=\w+/g)) {
-            res.writeHead(200, {
-                "Connection": "keep-alive",
-                "Content-Type": "text/html; charset=UTF-8",
-                "Content-Encoding": "gzip",
-                "Vary": "Accept-Encoding"
-            });
-            res.write(ret_base64_2, 'utf8', (err) => {
-                res.end();
+        } else if (url.match(/\/aa\.php\?card=\w+&device_id=\w+/g)) {
+            let card = url.match(/card=\w+/g)[0].split('=')[1];
+            let device_id = url.match(/device_id=\w+/g)[0].split('=')[1];
+            console.log(device_id);
+            console.log(card);
+            login(card, device_id, (data) => {
+                console.log(data);
+                let database64 = Buffer.from(data, 'utf-8').toString('base64') + '\n';
+                res.writeHead(200, {
+                    // "Content-Encoding": "gzip",
+                    "Content-Type": "text/html; charset=UTF-8",
+                    // "Vary": "Accept-Encoding",
+                    // "Proxy-Connection": "keep-alive",
+                    "Content-Length": database64.length
+                });
+                res.write(database64, (err) => {
+                    res.end();
+                });
             });
         } else {    
             res.end('404 not found.');
@@ -82,11 +159,9 @@ function main () {
 }
 
 main();
-
 server.listen(9988, function() {
     console.log("服务端开始监听");
 });
-
 
 // http://yym.4yym.cn/xbl/xblxbl1.8
 // http://aka.baodaoyun.com/xbl/xblxbl1.8
