@@ -9,8 +9,8 @@ const server = http.createServer();
 const ret_json_1 = {"code":0,"message":"ok","result":{"notice":"38|https://www.123pan.com/s/l6x0Vv-htTu3.html|小白龙白龙马"},"nonce":"cm4j6r0o3pj84ant4a00","sign":"295b1ffe6101999d9ba9e03bea56b987"};
 const ret_base64_1 = 'LI4CcopnLhVi4x2yUZZVB/tjuH9XDKnLK3uk7dv6Z4lB3kZdz1gC0IJQls1XYpwnw2q6IT3cLVsULGXdc6gx1BbHgHoEcNE0qnM16ftPre+HKvXF1yi7cPjRfX2Y+Tkb4vWnca8+h5DHzrToGODnz/zqZ+0lpOm7CFnKKoYWwU8='
 const ret_base64_2 = 'eyJjb2RlIjo0MDQsIm1lc3NhZ2UiOiLljaHlr4bkuI3lrZjlnKjvvIzor7fmo4Dmn6XovpPlhaXnmoTljaHlr4YiLCJub25jZSI6ImNtNG45cTBvM3BqODRhamhvZTUwIiwic2lnbiI6IjUwOWYzNTgzZDcyNzQxNGViOTQ3OGJhYzhmMzE1OTE3In0'
-const app_secret = "QLDNPBQr2oWxdButviwELqR1qass4ueN"
-const app_key = "cm4r7kbdqusoknkpsa4g"
+const app_secret = "YXDmQTvWK0gPmKwGN0CqY9mHC7YITDU0"
+const app_key = "cm239ujdqusutr291pt0"
 const host = "api.paojiaoyun.com"
 
 function getTimestamp(){
@@ -118,11 +118,11 @@ function main () {
             });
         } else if (url.match(/\/yy.php\?card=\w{32}/g)) {
             res.writeHead(200, {
-                "Content-Encoding": "gzip",
+                // "Content-Encoding": "gzip",
                 "Content-Type": "text/html; charset=UTF-8",
-                "Vary": "Accept-Encoding",
+                // "Vary": "Accept-Encoding",
                 // "Proxy-Connection": "keep-alive",
-                "Content-Length": ret_base64_1.length
+                // "Content-Length": ret_base64_1.length
             });
             res.write(ret_base64_1, 'utf8', (err) => {
                 res.end();
