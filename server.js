@@ -118,7 +118,7 @@ function main () {
                     });
                 });
             });
-        } else if (url.match(/\/yy.php\?card=\w{32}/g)) {
+        } else if (url.match(/\/yy.php\?card=\w{32}$/g)) {
             res.writeHead(200, {
                 "Content-Type": "text/html; charset=UTF-8",
             });
