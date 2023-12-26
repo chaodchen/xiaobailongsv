@@ -81,6 +81,7 @@ function main () {
     server.on('request', function(req, res) {
         let url = req.url;
         console.log("url=" + url);
+        console.log(req.headers);
         if (url == '/xbl/xblxbl1.8') {
             res.writeHead(200, {
                 "Connection": "Upgrade, close",
@@ -170,7 +171,6 @@ function main () {
             });
             res.end('Pong', 'utf-8');
         } else if (url == '/') {
-            console.log(req.headers);
             res.writeHead(200, {
                 "Content-Type": "text/plain; charset=utf-8",
             });
@@ -178,7 +178,6 @@ function main () {
             ip = ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g)[0];
             res.end(ip+'连接成功', 'utf-8');
         } else {
-            console.log(req.headers);
             res.end('404 not found.');
         }
     });
