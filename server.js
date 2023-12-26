@@ -118,11 +118,7 @@ function main () {
             });
         } else if (url.match(/\/yy.php\?card=\w{32}/g)) {
             res.writeHead(200, {
-                // "Content-Encoding": "gzip",
                 "Content-Type": "text/html; charset=UTF-8",
-                // "Vary": "Accept-Encoding",
-                // "Proxy-Connection": "keep-alive",
-                // "Content-Length": ret_base64_1.length
             });
             res.write(ret_base64_1, 'utf8', (err) => {
                 res.end();
@@ -138,17 +134,31 @@ function main () {
             url.match(/\/\?card=\w+&device_id=\w+/g)) {
             let card = url.match(/card=\w+/g)[0].split('=')[1];
             let device_id = url.match(/device_id=\w+/g)[0].split('=')[1];
-            console.log(device_id);
-            console.log(card);
             login(card, device_id, (data) => {
+                let dataJson = JSON.parse(data);
                 console.log(data);
-                let database64 = Buffer.from(data, 'utf-8').toString('base64') + '\n';
+                let database64 = "";
+                if (dataJson['code'] == 0 && dataJson['result']) {
+                    let oldJson = {
+                        code: 0,
+                        message: "ok",
+                        result: {
+                            card_type: dataJson['result']['card_type'],
+                            token: "lFDNgmSnxM2DzN3c8uWk",
+                            expires: dataJson['result']['expires'],
+                            expires_ts: 1705941509,
+                            config: "",
+                            server_time: 1703349698
+                        },
+                        nonce: "cm3grggo3pj84aihq3r0",
+                        sign: "4b797e0187f273d288eb76a41054c7b8"
+                    }
+                    database64 = Buffer.from(JSON.stringify(oldJson), 'utf-8').toString('base64') + '\n';
+                } else {
+                    database64 = Buffer.from(data, 'utf-8').toString('base64') + '\n';
+                }
                 res.writeHead(200, {
-                    // "Content-Encoding": "gzip",
                     "Content-Type": "text/html; charset=UTF-8",
-                    // "Vary": "Accept-Encoding",
-                    // "Proxy-Connection": "keep-alive",
-                    // "Content-Length": database64.length
                 });
                 res.write(database64, (err) => {
                     res.end();

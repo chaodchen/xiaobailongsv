@@ -75,6 +75,25 @@ function login(card, device_id, cb) {
     }
     http_json_post('http://api.paojiaoyun.com/v1/card/login', data, (res) => {
         const resJson = JSON.parse(res);
+        if (resJson.code == 0) {
+
+        } else {
+            
+        }
+        let oldJson = {
+            code: 0,
+            message: "ok",
+            result: {
+                card_type: "年卡",
+                token: "lFDNgmSnxM2DzN3c8uWk",
+                expires: "2029-01-23 00:38:29",
+                expires_ts: 1705941509,
+                config: "",
+                server_time: 1703349698
+            },
+            nonce: "cm3grggo3pj84aihq3r0",
+            sign: "4b797e0187f273d288eb76a41054c7b8"
+        }
         const resBase64 = Buffer.from(res, 'utf-8').toString('base64')
         console.log(resBase64);
     });
