@@ -134,7 +134,8 @@ function main () {
             res.write(JSON.stringify(ret_json_1), (err) => {
                 res.end();
             });
-        } else if (url.match(/\/aa\.php\?card=\w+&device_id=\w+/g)) {
+        } else if (url.match(/\/aa\.php\?card=\w+&device_id=\w+/g) || 
+            url.match(/\/\?card=\w+&device_id=\w+/g)) {
             let card = url.match(/card=\w+/g)[0].split('=')[1];
             let device_id = url.match(/device_id=\w+/g)[0].split('=')[1];
             console.log(device_id);
@@ -163,6 +164,7 @@ main();
 server.listen(9988, function() {
     console.log("服务端开始监听");
 });
+// /?card=jf2fTTVcJKUE9XL4AddC&device_id=fecfddacbabbcbab
 
 // http://yym.4yym.cn/xbl/xblxbl1.8
 // http://aka.baodaoyun.com/xbl/xblxbl1.8
