@@ -118,10 +118,11 @@ function main () {
             });
         } else if (url.match(/\/yy.php\?card=\w{32}/g)) {
             res.writeHead(200, {
-                // "Connection": "keep-alive",
-                // "Content-Encoding": "gzip",
+                "Content-Encoding": "gzip",
                 "Content-Type": "text/html; charset=UTF-8",
-                // "Vary": "Accept-Encoding"
+                "Vary": "Accept-Encoding",
+                // "Proxy-Connection": "keep-alive",
+                "Content-Length": ret_base64_1.length
             });
             res.write(ret_base64_1, 'utf8', (err) => {
                 res.end();
@@ -142,9 +143,9 @@ function main () {
                 console.log(data);
                 let database64 = Buffer.from(data, 'utf-8').toString('base64') + '\n';
                 res.writeHead(200, {
-                    // "Content-Encoding": "gzip",
+                    "Content-Encoding": "gzip",
                     "Content-Type": "text/html; charset=UTF-8",
-                    // "Vary": "Accept-Encoding",
+                    "Vary": "Accept-Encoding",
                     // "Proxy-Connection": "keep-alive",
                     "Content-Length": database64.length
                 });
