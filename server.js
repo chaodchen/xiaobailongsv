@@ -196,16 +196,3 @@ main();
 server.listen(9988, function() {
     console.log("服务端开始监听");
 });
-// /?card=jf2fTTVcJKUE9XL4AddC&device_id=fecfddacbabbcbab
-
-// http://yym.4yym.cn/xbl/xblxbl1.8
-// http://aka.baodaoyun.com/xbl/xblxbl1.8
-// http://yym.4yym.cn/xbl/abcabc
-// http://yym.4yym.cn/yy.php?card=394bb139818460d3607e2b792c045afd
-// http://api.paojiaoyun.com/v1/software/notice?app_key=ckn72tjdqusvnto8uf9g&nonce=fecfddacbabbcbab1703490410&timestamp=1703490410&sign=042ec072a67bf86fcdb53b215143fe9d
-// http://api.paojiaoyun.com/v1/ping
-// http://api.paojiaoyun.com/v1/software/notice?app_key=ckn72tjdqusvnto8uf9g&nonce=cm4j6q8o3pj84ant3hkg1703490413&timestamp=1703490413&sign=f651f766e8203e72d78b2b08a1269f24
-// http://api.paojiaoyun.com/v1/software/notice?app_key=ckn72tjdqusvnto8uf9g&nonce=cm4j6r0o3pj84ant4a001703490417&timestamp=1703490417&sign=d02aebb2592afa4b4f1b62981ac314b2
-// http://yym.4yym.cn/aa.php?card=yttt&device_id=fecfddacbabbcbab
-// /yy.php\?card=\w{32}
-// 042ec072a67bf86fcdb53b215143fe9d
