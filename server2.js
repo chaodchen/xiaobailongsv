@@ -30,8 +30,8 @@ function rc4(key, text) {
 const userdict = {}
 const server = http.createServer()
 
-const app_secret = "YXDmQTvWK0gPmKwGN0CqY9mHC7YITDU0"
-const app_key = "cm239ujdqusutr291pt0"
+const app_secret = "l8T7X5VFTz561QjtZi4yL1SLrtFN43wK"
+const app_key = "cmem0dbdqusoikkh2ev0"
 
 // 我的
 // const app_secret = "QLDNPBQr2oWxdButviwELqR1qass4ueN"
