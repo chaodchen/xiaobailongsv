@@ -30,8 +30,12 @@ function rc4(key, text) {
 const userdict = {}
 const server = http.createServer()
 
-const app_secret = "QLDNPBQr2oWxdButviwELqR1qass4ueN"
-const app_key = "cm4r7kbdqusoknkpsa4g"
+const app_secret = "YXDmQTvWK0gPmKwGN0CqY9mHC7YITDU0"
+const app_key = "cm239ujdqusutr291pt0"
+
+// 我的
+// const app_secret = "QLDNPBQr2oWxdButviwELqR1qass4ueN"
+// const app_key = "cm4r7kbdqusoknkpsa4g"
 const host = "api.paojiaoyun.com"
 
 // let isLock = false;
